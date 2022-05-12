@@ -1,19 +1,9 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import ListLocation from "./ListLocation";
+import { useContext } from "react";
+import LocationContext from "../context/Location/LocationContext";
 
 export default function InputFindLocation() {
-  const [value, setValue] = useState();
-  const [citys, setCitys] = useState(null);
-
-  const baseURL = `http://api.openweathermap.org/geo/1.0/direct?q=${value}&limit=5&appid=d4bcc7ec6184dd6b1295f79f76f0106c`;
-
-  useEffect(() => {
-    axios.get(baseURL).then((response) => {
-      setCitys(response.data);
-      console.log(response.data);
-    });
-  }, [value]);
+  const { findedLocation } = useContext(LocationContext);
 
   return (
     <>
@@ -21,7 +11,7 @@ export default function InputFindLocation() {
         <div className="mt-1 relative">
           <div>
             <input
-              onChange={(e) => setValue(e.target.value)}
+              onChange={(e) => findedLocation(e.target.value)}
               type="text"
               name="localization"
               id="localization"
@@ -34,7 +24,6 @@ export default function InputFindLocation() {
           </div>
         </div>
       </div>
-      {citys !== null ? <ListLocation props={citys} state={setCitys} /> : null}
     </>
   );
 }
