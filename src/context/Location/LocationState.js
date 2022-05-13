@@ -1,7 +1,14 @@
+import baseAxios from "axios";
 import React, { useReducer } from "react";
-import LocationReducer from "./LocationReducer";
 import LocationContext from "./LocationContext";
-import axios from "axios";
+import LocationReducer from "./LocationReducer";
+
+const axios = baseAxios.create({
+  baseURL: "https://api.openweathermap.org/",
+  params: {
+    appid: "f9a8b731ede23577ff6c06b5fad1367e"
+  }
+})
 
 const LocationState = (props) => {
   const initialState = {
@@ -13,27 +20,30 @@ const LocationState = (props) => {
 
   const [state, dispatch] = useReducer(LocationReducer, initialState);
 
-  const findedLocation = (city) => {
-    dispatch({
-      type: "SEARCHED_LOCATIONS",
-      payload: city,
-    });
-  };
-
   const getLocations = async (location) => {
     const arr = await axios.get(
-      `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=5&appid=f9a8b731ede23577ff6c06b5fad1367e`
+      `/geo/1.0/direct?q=${location}&limit=5`
     );
 
     dispatch({
       type: "GET_LOCATIONS",
-      payload: new Array(arr.data[0]),
+      payload: arr.data.filter(({ country }) => country === "ES"),
     });
   };
 
   const getSelectedLocation = async (lat, lon) => {
+    dispatch({
+      type: "GETTING_SELECTED_LOCATION"
+    });
+
     const res = await axios.get(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=f9a8b731ede23577ff6c06b5fad1367e`
+      `/data/2.5/weather`,
+      {
+        params: {
+          lat,
+          lon
+        }
+      }
     );
 
     dispatch({
@@ -49,8 +59,7 @@ const LocationState = (props) => {
         selectedLocation: state.selectedLocation,
         searchedLocation: state.searchedLocation,
         getLocations,
-        getSelectedLocation,
-        findedLocation,
+        getSelectedLocation
       }}
     >
       {props.children}

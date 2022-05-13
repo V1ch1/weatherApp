@@ -1,7 +1,7 @@
 import {
   GET_LOCATIONS,
   GET_SELECTED_LOCATION,
-  SEARCHED_LOCATIONS,
+  SEARCHED_LOCATIONS
 } from "../types";
 
 function LocationReducer(state, action) {
@@ -17,6 +17,11 @@ function LocationReducer(state, action) {
       return {
         ...state,
         selectedLocation: payload,
+      };
+    case "GETTING_SELECTED_LOCATION":
+      return {
+        ...state,
+        selectedLocation: undefined,
       };
     case SEARCHED_LOCATIONS:
       return {

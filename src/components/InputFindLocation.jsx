@@ -1,16 +1,15 @@
-import React, { useState } from "react";
-import { useContext } from "react";
+import React, { useContext, useState } from "react";
 import LocationContext from "../context/Location/LocationContext";
 
 export default function InputFindLocation() {
   const [location, setLocation] = useState("");
 
-  const { findedLocation } = useContext(LocationContext);
+  const { getLocations } = useContext(LocationContext);
 
   return (
     <>
-      <div className="m-auto mt-8 h-1">
-        <div className="mt-1 relative">
+      <div className="h-1 m-auto mt-8">
+        <div className="relative mt-1">
           <div>
             <input
               onChange={(e) => setLocation(e.target.value)}
@@ -18,15 +17,15 @@ export default function InputFindLocation() {
               value={location}
               name="localization"
               id="localization"
-              className="focus:ring-sky-500 focus:border-sky-500 h-10 pl-7 pr-12 sm:text-sm border-gray-300 rounded-md shadow-sm border-2 inline-flex"
+              className="inline-flex h-10 pr-12 border-2 border-gray-300 rounded-md shadow-sm focus:ring-sky-500 focus:border-sky-500 pl-7 sm:text-sm"
               placeholder="Busca por ciudad"
             />
             <button
               onClick={() => {
-                findedLocation(location);
+                getLocations(location);
                 setLocation("");
               }}
-              className="inline-flex items-center h-10 justify-center ml-8 px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-sky-400 hover:bg-sky-500 focus:outline-none focus:shadow-outline-blue transition duration-150 ease-in-out"
+              className="inline-flex items-center justify-center h-10 px-5 py-3 ml-8 text-base font-medium text-white transition duration-150 ease-in-out border border-transparent rounded-md bg-sky-400 hover:bg-sky-500 focus:outline-none focus:shadow-outline-blue"
             >
               Buscar
             </button>
