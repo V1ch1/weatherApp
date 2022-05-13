@@ -8,6 +8,7 @@ const LocationState = (props) => {
     locations: [],
     selectedLocation: null,
     SearchedLocation: null,
+    findedLocation: null,
   };
 
   const [state, dispatch] = useReducer(LocationReducer, initialState);
@@ -21,7 +22,7 @@ const LocationState = (props) => {
 
   const getLocations = async (location) => {
     const res = await axios.get(
-      `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=5&appid=d4bcc7ec6184dd6b1295f79f76f0106c`
+      `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=5&appid=f9a8b731ede23577ff6c06b5fad1367e`
     );
 
     dispatch({
@@ -32,7 +33,7 @@ const LocationState = (props) => {
 
   const getSelectedLocation = async ({ lat, lon }) => {
     const res = axios.get(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=d4bcc7ec6184dd6b1295f79f76f0106c`
+      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=f9a8b731ede23577ff6c06b5fad1367e`
     );
     dispatch({
       type: "GET_SELECTED_LOCATION",
