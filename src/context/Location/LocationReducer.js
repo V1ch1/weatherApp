@@ -21,7 +21,7 @@ function LocationReducer(state, action) {
     case SEARCHED_LOCATIONS:
       return {
         ...state,
-        SearchedLocation: payload,
+        searchedLocation: payload,
       };
     default:
       return state;
